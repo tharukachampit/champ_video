@@ -9,9 +9,8 @@ interface AudioEventListener {
 }
 
 class AudioChangeReceiver(var audioEventListener: AudioEventListener) : BroadcastReceiver() {
-    @Override
-    fun onReceive(context: Context?, intent: Intent) {
-        if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == Intent.ACTION_HEADSET_PLUG) {
 //            final int state = intent.getIntExtra("state", -1);
             audioEventListener.onChanged()
         }
