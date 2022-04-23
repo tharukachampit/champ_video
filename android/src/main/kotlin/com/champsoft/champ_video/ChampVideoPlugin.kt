@@ -14,10 +14,6 @@ import java.util.*
 
 /** ChampVideoPlugin */
 class ChampVideoPlugin:FlutterPlugin, MethodChannel.MethodCallHandler {
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
     private lateinit var channel : MethodChannel
     private var methodChannel = "com.plugin.champsoft/champ_video"
     private lateinit var audioManager:AudioManager
@@ -27,14 +23,15 @@ class ChampVideoPlugin:FlutterPlugin, MethodChannel.MethodCallHandler {
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, methodChannel)
-        channel.setMethodCallHandler(FlutterAudioManagerPlugin())
+        channel.setMethodCallHandler(this)
+
         val receiver = AudioChangeReceiver(listener)
         val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
-        activeContext = registrar.activeContext()
+        activeContext = flutterPluginBinding.getApplicationContext()
         activeContext.registerReceiver(receiver, filter)
         audioManager = activeContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
     }
+
 
     var listener: AudioEventListener = object : AudioEventListener {
         override fun onChanged() {
@@ -42,21 +39,29 @@ class ChampVideoPlugin:FlutterPlugin, MethodChannel.MethodCallHandler {
         }
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        if (call.method.equals("getCurrentOutput")) {
-            result.success(getCurrentOutput())
-        } else if (call.method.equals("getAvailableInputs")) {
-            result.success(getAvailableInputs())
-        } else if (call.method.equals("changeToReceiver")) {
-            result.success(changeToReceiver())
-        } else if (call.method.equals("changeToSpeaker")) {
-            result.success(changeToSpeaker())
-        } else if (call.method.equals("changeToHeadphones")) {
-            result.success(changeToHeadphones())
-        } else if (call.method.equals("changeToBluetooth")) {
-            result.success(changeToBluetooth())
-        } else {
-            result.notImplemented()
+    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
+        when {
+            call.method.equals("getCurrentOutput") -> {
+                result.success(getCurrentOutput());
+            }
+            call.method.equals("getAvailableInputs") -> {
+                result.success(getAvailableInputs());
+            }
+            call.method.equals("changeToReceiver") -> {
+                result.success(changeToReceiver());
+            }
+            call.method.equals("changeToSpeaker") -> {
+                result.success(changeToSpeaker());
+            }
+            call.method.equals("changeToHeadphones") -> {
+                result.success(changeToHeadphones());
+            }
+            call.method.equals("changeToBluetooth") -> {
+                result.success(changeToBluetooth());
+            }
+            else -> {
+                result.notImplemented();
+            }
         }
     }
 
@@ -130,11 +135,12 @@ class ChampVideoPlugin:FlutterPlugin, MethodChannel.MethodCallHandler {
         }
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPluginBinding?) {
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         if (channel != null) {
             channel.setMethodCallHandler(null)
             channel = null
         }
+        return channel.setMethodCallHandler(null)
     }
 }
 
