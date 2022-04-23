@@ -1,6 +1,6 @@
 # champ_video
 
-Champ connect video client sdk
+A new Flutter project.
 
 ## Getting Started
 

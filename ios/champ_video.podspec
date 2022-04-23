@@ -5,9 +5,9 @@
 Pod::Spec.new do |s|
   s.name             = 'champ_video'
   s.version          = '0.0.1'
-  s.summary          = 'Champ connect video client sdk'
+  s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC
-Champ connect video client sdk
+A new Flutter project.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
