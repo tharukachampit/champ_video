@@ -21,9 +21,11 @@ import io.flutter.plugin.common.MethodChannel.Result;
 
 /** ChampVideoPlugin */
 public class ChampVideoPlugin implements FlutterPlugin, MethodCallHandler {
-  /// The MethodChannel that will the communication between Flutter and native Android
+  /// The MethodChannel that will the communication between Flutter and native
+  /// Android
   ///
-  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
+  /// This local reference serves to register the plugin with the Flutter Engine
+  /// and unregister it
   /// when the Flutter Engine is detached from the Activity
   private static MethodChannel channel;
   private static AudioManager audioManager;
@@ -38,15 +40,6 @@ public class ChampVideoPlugin implements FlutterPlugin, MethodCallHandler {
     activeContext = flutterPluginBinding.getApplicationContext();
     activeContext.registerReceiver(receiver, filter);
     audioManager = (AudioManager) activeContext.getSystemService(Context.AUDIO_SERVICE);
-  }
-
-  @Override
-  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-    if (call.method.equals("getPlatformVersion")) {
-      result.success("Android " + android.os.Build.VERSION.RELEASE);
-    } else {
-      result.notImplemented();
-    }
   }
 
   static AudioEventListener listener = new AudioEventListener() {
@@ -149,10 +142,9 @@ public class ChampVideoPlugin implements FlutterPlugin, MethodCallHandler {
     }
   }
 
-
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-    if(channel != null){
+    if (channel != null) {
       channel.setMethodCallHandler(null);
       channel = null;
     }
