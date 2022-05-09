@@ -56,7 +56,7 @@ packages:
       name: dart_webrtc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6"
   debug_logger:
     dependency: "direct main"
     description:
@@ -204,7 +204,7 @@ packages:
       name: flutter_webrtc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.5"
+    version: "0.8.6"
   http:
     dependency: "direct main"
     description:
@@ -243,9 +243,11 @@ packages:
   livekit_client:
     dependency: "direct main"
     description:
-      name: livekit_client
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: "v0.5.9"
+      resolved-ref: "28a70ea254fae81418467641949d35b7a3101121"
+      url: "https://github.com/tharukachampit/livekit.git"
+    source: git
     version: "0.5.9"
   logger:
     dependency: transitive
@@ -461,7 +463,7 @@ packages:
       name: webrtc_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   win32:
     dependency: transitive
     description:
