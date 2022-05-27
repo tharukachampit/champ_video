@@ -1,5 +1,5 @@
 name: champ_video
-description: A new Flutter project.
+description: Flutter Client SDK for Champ Connect Video.
 version: 0.0.1
 homepage: none
 
@@ -10,10 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  livekit_client: 
-    git:
-      url: https://github.com/tharukachampit/livekit.git
-      ref: v0.5.9
+  livekit_client: ^1.0.0
   http: ^0.13.4
   flutter_secure_storage: ^5.0.2
   jwt_decoder: ^2.0.1
