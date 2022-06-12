@@ -5,6 +5,7 @@ import 'package:champ_video/src/enums/enums.dart';
 import 'package:champ_video/src/interfaces/interfaces.dart';
 import 'package:champ_video/src/logger/logger.dart';
 import 'package:http/http.dart' as http;
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'core.dart';
 
@@ -18,12 +19,24 @@ class ChampService {
       'Content-Type': 'application/json'
     };
 
+    String appId = '';
+    
+    try{
+          PackageInfo packageInfo = await PackageInfo.fromPlatform();
+          appId= packageInfo.packageName;
+    }catch(err){
+      Logger.warning(err);
+    }
+
+
+
     http.Response response = await http.post(
       Uri.parse('$baseUrl/api/device'),
       headers: headers,
       body: json.encode({
         "deviceToken": "$deviceToken",
         "platform": Platform.operatingSystem,
+        "appId":appId,
       }),
     );
 
