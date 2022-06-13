@@ -1,6 +1,6 @@
 name: champ_video
 description: Flutter Client SDK for Champ Connect Video.
-version: 0.0.1
+version: 0.0.4
 homepage: none
 
 environment:

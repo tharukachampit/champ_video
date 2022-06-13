@@ -95,7 +95,8 @@ class ChampVideo {
     }
   }
 
-  static Future<void> logout() async {
+  static Future<void> logout({String? deviceToken =''}) async {
+    await ChampService.removeDevice(deviceToken: deviceToken);
     await SecureVault.clear();
     return;
   }

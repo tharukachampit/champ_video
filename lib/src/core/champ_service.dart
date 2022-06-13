@@ -47,6 +47,33 @@ class ChampService {
     }
   }
 
+
+static Future<void> removeDevice({String? deviceToken = ''}) async {
+    String? token = await SecureVault.getToken();
+    String? baseUrl = await SecureVault.baseUrl();
+
+    Map<String, String> headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+
+    http.Response response = await http.delete(
+      Uri.parse('$baseUrl/api/device'),
+      headers: headers,
+      body: json.encode({
+        "deviceToken": "$deviceToken",
+        "platform": Platform.operatingSystem,
+      }),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Logger.debug(response.body);
+    } else {
+      Logger.debug(response.reasonPhrase);
+    }
+  }
+
+
   static Future<Call> createCall(
     String to, {
     required Caller caller,
